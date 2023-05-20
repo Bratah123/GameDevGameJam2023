@@ -11,7 +11,8 @@ pub const PLAYER_SPEED: f32 = 350.0;
 impl Plugin for PlayerPlugin {
     fn build(&self, app: &mut App) {
         app.add_startup_system(startup_system)
-            .add_system(player_movement_system);
+            .add_system(player_movement_system)
+            .add_system(apply_player_gravity_system);
     }
 }
 
@@ -49,5 +50,23 @@ fn player_movement_system(
             direction = direction.normalize();
         }
         controller.translation = Some(direction * PLAYER_SPEED * time.delta_seconds());
+    }
+}
+
+fn apply_player_gravity_system(
+    mut player_query: Query<(&mut KinematicCharacterController, &KinematicCharacterControllerOutput), With<Player>>,
+    time: Res<Time>
+) {
+    for (mut controller, output) in player_query.iter_mut() {
+        if !output.grounded {
+            controller.translation =
+                match controller.translation {
+                    Some(mut v) => {
+                        v.y = -1.0;
+                        Some(v)
+                    }
+                    None => Some(Vec2::new(0.0, -1.0) * PLAYER_SPEED * time.delta_seconds()),
+                };
+        }
     }
 }
