@@ -25,3 +25,13 @@ Note that there is no need to format anything by hand, since the Rust formatting
     - C++ CMake tools
 5. *Bevy* has a dynamic linking configuration toggle that speeds up compilation times for dev builds (NOT supported on Windows)
 
+## Build
+We periodically build and upload to the [repository releases page](https://github.com/Bratah123/GameDevGameJam2023/releases).
+However, if you would like to compile from source, here are the instructions:
+
+*Note: at the time of writing, `jigen_tensei` is currently the placeholder name for the Cargo project.*
+1. `cd jigen_tensei`
+2. `cargo build --release` to compile a release build for the platform you are running on
+   - The output can be found at `jigen_tensei/target/release/`
+   - The `.exe` file produced on Windows will run standalone (only needing the asset folder to be in the same directory)
+   - See [here](https://bevy-cheatbook.github.io/platforms/wasm.html) for WASM instructions
