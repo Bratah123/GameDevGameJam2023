@@ -1,5 +1,5 @@
 # GameDevGameJam2023
-The repository for the GameDev.tv Game Jam 2023
+This is the repository for our entry to the [GameDev.tv Game Jam 2023](https://itch.io/jam/gamedevtv-jam-2023).
 
 ## Technical Information
 ### Tech Stack
@@ -24,3 +24,4 @@ Note that there is no need to format anything by hand, since the Rust formatting
     - Windows SDK
     - C++ CMake tools
 5. *Bevy* has a dynamic linking configuration toggle that speeds up compilation times for dev builds (NOT supported on Windows)
+
