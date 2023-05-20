@@ -3,12 +3,12 @@ This is the repository for our entry to the [GameDev.tv Game Jam 2023](https://i
 
 ## Technical Information
 ### Tech Stack
-This project is initialised with `Rust 1.69.0`.  
+This project is initialised with `Rust 1.69.0` and `Bevy 0.10.1`.  
 A quick cheat sheet for Rust conventions can be found [here](https://rustc-dev-guide.rust-lang.org/conventions.html), and the style guide [here](https://rust-lang.github.io/api-guidelines/).
 Note that there is no need to format anything by hand, since the Rust formatting tool can accomplish this automatically.
 
 *Bevy*, the game engine, has [API docs](https://docs.rs/bevy/latest/bevy/), as well as [code examples for every feature](https://github.com/bevyengine/bevy/tree/latest/examples#examples) provided.    
-*Rapier 3D*, the physics engine, has [API docs](https://docs.rs/bevy_rapier3d/latest/bevy_rapier3d/), as well as [user guides](https://rapier.rs/docs/user_guides/bevy_plugin/getting_started_bevy/) provided.
+*Rapier 2D*, the physics engine, has [API docs](https://docs.rs/bevy_rapier2d/latest/bevy_rapier2d/), as well as [user guides](https://rapier.rs/docs/user_guides/bevy_plugin/getting_started_bevy/) provided.
 
 ### Set Up Your Development Environment
 *This guide assumes you are using IntelliJ on 64-bit Windows 10/11, and have Visual Studio installed*
