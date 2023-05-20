@@ -8,6 +8,7 @@ edition = "2021"
 [dependencies]
 bevy = "0.10.1"
 bevy_rapier3d = "0.21.0"  # 3D Physics
+moonshine-save = "0.2.2"  # docs: https://github.com/Zeenobit/moonshine_save
 
 # Enable a small amount of optimization in debug mode
 [profile.dev]

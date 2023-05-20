@@ -1859,6 +1859,7 @@ version = "0.1.0"
 dependencies = [
  "bevy",
  "bevy_rapier3d",
+ "moonshine-save",
 ]
 
 [[package]]
@@ -2128,6 +2129,22 @@ dependencies = [
  "log",
  "wasi",
  "windows-sys 0.45.0",
+]
+
+[[package]]
+name = "moonshine-save"
+version = "0.2.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "0ab167f49ea4e7a88daf19e9d807f931430bcc5d0a25edf42797319abe9438d7"
+dependencies = [
+ "bevy_app",
+ "bevy_ecs",
+ "bevy_hierarchy",
+ "bevy_reflect",
+ "bevy_scene",
+ "bevy_utils",
+ "ron",
+ "serde",
 ]
 
 [[package]]
