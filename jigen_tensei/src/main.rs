@@ -1,9 +1,12 @@
-#![cfg_attr(not(debug_assertions), windows_subsystem = "windows")] // no external terminal window for release
+#![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
+
+use std::collections::HashSet;
+// no external terminal window for release
 use crate::player::PlayerPlugin;
 use bevy::log::LogPlugin;
 use bevy::prelude::*;
 use bevy_ecs_ldtk::prelude::*;
-use bevy_rapier2d::prelude::*;
+use bevy_rapier2d::{prelude::*, rapier::prelude::Cuboid};
 
 #[path = "player/player.rs"]
 mod player;
@@ -25,9 +28,11 @@ fn main() {
             ..Default::default()
         })
         .insert_resource(LevelSelection::Index(0))
+        .insert_resource(GroundDetection { on_ground: false })
         .add_startup_system(setup_graphics)
         .add_startup_system(setup_physics)
         .add_system(camera_fit_inside_current_level)
+        .add_system(spawn_ground_sensor)
         .run();
 }
 
@@ -130,6 +135,42 @@ pub fn camera_fit_inside_current_level(
                     camera_transform.translation.y += level_transform.translation.y;
                 }
             }
+        }
+    }
+}
+
+#[derive(Clone, Default, Component, Resource)]
+pub struct GroundDetection {
+    pub on_ground: bool,
+}
+
+#[derive(Component)]
+pub struct GroundSensor {
+    pub ground_detection_entity: Entity,
+    pub intersecting_ground_entities: HashSet<Entity>,
+}
+
+pub fn spawn_ground_sensor(
+    mut commands: Commands,
+    detect_ground_for: Query<(Entity, &Collider, &Transform), Added<GroundDetection>>,
+) {
+    for (entity, shape, transform) in detect_ground_for.iter() {
+        if let Some(Cuboid { half_extents }) = shape.raw.0.as_cuboid() {
+            commands.entity(entity).with_children(|builder| {
+                builder.spawn((
+                    Sensor,
+                    Collider::cuboid(half_extents.x / 2., 2.),
+                    ActiveEvents::COLLISION_EVENTS,
+                    Transform::from_translation(
+                        Vec3::new(0., -half_extents.y, 0.) / transform.scale,
+                    ),
+                    GlobalTransform::default(),
+                    GroundSensor {
+                        ground_detection_entity: entity,
+                        intersecting_ground_entities: HashSet::new(),
+                    },
+                ));
+            });
         }
     }
 }
