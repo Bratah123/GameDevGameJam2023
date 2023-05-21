@@ -2,7 +2,7 @@ use bevy::prelude::*;
 use bevy_rapier2d::prelude::*;
 
 #[derive(Component)]
-struct Player;
+pub struct Player;
 
 pub struct PlayerPlugin;
 
@@ -37,13 +37,13 @@ fn startup_system(mut commands: Commands) {
 fn player_movement_system(
     keys: Res<Input<KeyCode>>,
     mut player_query: Query<&mut KinematicCharacterController, With<Player>>,
-    time: Res<Time>) {
+    time: Res<Time>,
+) {
     if let Ok(mut controller) = player_query.get_single_mut() {
         let mut direction = Vec2::ZERO;
         if keys.pressed(KeyCode::D) {
             direction.x += 1.0;
-        }
-        else if keys.pressed(KeyCode::A) {
+        } else if keys.pressed(KeyCode::A) {
             direction.x -= 1.0;
         }
         if direction.length() > 0.0 {
@@ -54,19 +54,24 @@ fn player_movement_system(
 }
 
 fn apply_player_gravity_system(
-    mut player_query: Query<(&mut KinematicCharacterController, &KinematicCharacterControllerOutput), With<Player>>,
-    time: Res<Time>
+    mut player_query: Query<
+        (
+            &mut KinematicCharacterController,
+            &KinematicCharacterControllerOutput,
+        ),
+        With<Player>,
+    >,
+    time: Res<Time>,
 ) {
     for (mut controller, output) in player_query.iter_mut() {
         if !output.grounded {
-            controller.translation =
-                match controller.translation {
-                    Some(mut v) => {
-                        v.y = -1.0;
-                        Some(v)
-                    }
-                    None => Some(Vec2::new(0.0, -1.0) * PLAYER_SPEED * time.delta_seconds()),
-                };
+            controller.translation = match controller.translation {
+                Some(mut v) => {
+                    v.y = -1.0;
+                    Some(v)
+                }
+                None => Some(Vec2::new(0.0, -1.0) * PLAYER_SPEED * time.delta_seconds()),
+            };
         }
     }
 }
