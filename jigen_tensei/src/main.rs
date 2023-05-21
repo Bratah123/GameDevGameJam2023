@@ -29,8 +29,8 @@ fn main() {
         })
         .insert_resource(LevelSelection::Index(0))
         .insert_resource(GroundDetection { on_ground: false })
-        .add_startup_system(setup_graphics)
-        .add_startup_system(setup_physics)
+        .add_startup_system(load_world_and_camera)
+        .add_startup_system(spawn_sample_platform)
         .add_system(camera_fit_inside_current_level)
         .add_system(spawn_ground_sensor)
         .run();
@@ -49,7 +49,8 @@ impl Plugin for TweakedDefaultPlugins {
             DefaultPlugins
                 .set(LogPlugin {
                     level: bevy::log::Level::DEBUG,
-                    filter: "debug,wgpu_core=warn,wgpu_hal=warn,jigen_tensei=debug".into(),
+                    filter: "debug,wgpu_core=warn,wgpu_hal=warn,naga=warn,jigen_tensei=debug"
+                        .into(),
                 })
                 .set(ImagePlugin::default_nearest()),
         );
@@ -65,7 +66,7 @@ impl Plugin for TweakedDefaultPlugins {
     // Example log line: error!("Unknown condition!");
 }
 
-fn setup_graphics(mut commands: Commands, asset_server: Res<AssetServer>) {
+fn load_world_and_camera(mut commands: Commands, asset_server: Res<AssetServer>) {
     // Add a camera so we can see the debug-render.
     commands.spawn(Camera2dBundle::default());
 
@@ -76,11 +77,22 @@ fn setup_graphics(mut commands: Commands, asset_server: Res<AssetServer>) {
     });
 }
 
-fn setup_physics(mut commands: Commands) {
-    /* Create the ground. */
+fn spawn_sample_platform(mut commands: Commands) {
     commands
-        .spawn(Collider::cuboid(500.0, 50.0))
-        .insert(TransformBundle::from(Transform::from_xyz(0.0, -100.0, 0.0)));
+        .spawn(SpriteBundle {
+            sprite: Sprite {  // Create 1 pixel by 1 pixel block of colour
+                color: Color::rgb(0.25, 0.25, 0.75),
+                ..Default::default()
+            },
+            transform: Transform {  // scale and move to desired size and location
+                translation: Vec3::new(300.0, 30.0, 1.0),
+                scale: Vec3::new(500.0, 20.0, 1.0),
+                ..Default::default()
+            },
+            ..Default::default()
+        })
+        .insert(RigidBody::Fixed)
+        .insert(Collider::cuboid(0.5, 0.5));  // 1/2 * 1 pixel pre-scaling = 0.5
 }
 
 #[allow(clippy::type_complexity)]
