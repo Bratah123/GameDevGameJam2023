@@ -1,5 +1,19 @@
 # GameDevGameJam2023
-This is the repository for our entry to the [GameDev.tv Game Jam 2023](https://itch.io/jam/gamedevtv-jam-2023).
+This is the repository for our entry to the [GameDev.tv Game Jam 2023](https://itch.io/jam/gamedevtv-jam-2023).  
+
+The "two dimensions" theme is meant to be met by the duality of physical and non-physical realms in the game.
+
+We envisioned a platformer where the protagonist has reincarnated into a 2D world (probably via truck-kun, in the vein of isekai animes). 
+The protagonist retains their memories of the 3D world they came from (i.e. our world), and as an additional gift from the gods of this world, is able to eject their soul from their body for a short span of time (Dimensional Shift). 
+Whilst in this state, they are able to interact with the non-physical realm - however, failure to return to their bodies before Dimensional Shift times out results in death (game over). 
+In the non-physical realm, they will be able to see monsters that are causing problems in the physical one: NPCs in the physical realm being anxious or depressed. 
+As the protagonist searches for a purpose in life (an answer as to why they've been summoned here), they help the people they encounter by finding creative solutions to defeating non-physical monsters (given their lack of fighting capabilities).
+
+
+## NOTE: INCOMPLETE REPOSITORY!
+This project died to silver bullet syndrome.  
+Having both of us learn Rust + Bevy + Rapier on the job was too tough, and the complications that ldtk brought about made it much worse.  
+If you came here looking for a completed Bevy project to refer to, I'm sorry but you're out of luck.
 
 ## Technical Information
 ### Tech Stack
